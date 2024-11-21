@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '12.0'
+platform :ios, '12.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -32,6 +32,11 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  # 添加静态库支持
+  pod 'ARTCAICallKit', '~> 1.2.0', :modular_headers => true
+  pod 'AliVCSDK_ARTC', '~> 6.11.3', :modular_headers => true
+
   target 'RunnerTests' do
     inherit! :search_paths
   end
@@ -40,5 +45,22 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    
+    target.build_configurations.each do |config|
+      # 添加编译配置
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      config.build_settings['VALID_ARCHS'] = 'arm64 x86_64'
+      
+      # 添加后台模式支持
+      config.build_settings['ENABLE_BACKGROUND_MODES'] = 'YES'
+      
+      # 添加其他必要的编译标志
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+      config.build_settings['OTHER_LDFLAGS'] ||= ['$(inherited)']
+      
+      # 确保支持静态库
+      config.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+    end
   end
 end
