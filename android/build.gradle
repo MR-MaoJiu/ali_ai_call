@@ -16,8 +16,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
 }
 
@@ -58,6 +59,7 @@ android {
         implementation 'com.aliyun.auikits.android:ARTCAICallKit:1.2.0'
         compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
         compileOnly 'androidx.annotation:annotation:1.1.0'
+        implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     }
 
     testOptions {

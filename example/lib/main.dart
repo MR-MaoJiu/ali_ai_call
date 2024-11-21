@@ -1,7 +1,9 @@
 import 'package:ali_ai_call/ai_call_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -60,6 +62,11 @@ class _AICallDemoState extends State<AICallDemo> {
       });
     } catch (e) {
       print('初始化失败: $e');
+      if (e is PlatformException) {
+        print('错误代码: ${e.code}');
+        print('错误信息: ${e.message}');
+        print('错误详情: ${e.details}');
+      }
     }
   }
 

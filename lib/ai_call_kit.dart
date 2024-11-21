@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class AiCallKit {
-  static const MethodChannel _channel = MethodChannel('ai_call_kit');
+  static const MethodChannel _channel = MethodChannel('ali_ai_call');
 
   // 回调函数类型定义
   static void Function()? _onCallBegin;
