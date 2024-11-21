@@ -39,6 +39,7 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
     switch (call.method) {
       case "initEngine":
         String userId = call.argument("userId");
+        Log.e(TAG, "initEngine "+"userId:"+userId+"result:"+result);
         initEngine(userId, result);
         break;
       case "call":
@@ -46,28 +47,33 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
         String aiAgentInstanceId = call.argument("aiAgentInstanceId");
         String aiAgentUserId = call.argument("aiAgentUserId");
         String channelId = call.argument("channelId");
+        Log.e(TAG, "call "+"rtcToken:"+rtcToken+"aiAgentInstanceId:"+aiAgentInstanceId+"aiAgentUserId:"+aiAgentUserId+"channelId:"+channelId+"result:"+result);
         startCall(rtcToken, aiAgentInstanceId, aiAgentUserId, channelId, result);
         break;
       case "hangup":
+        Log.e(TAG, "hangup"+"result"+result);
         hangup(result);
         break;
       case "switchMicrophone":
         Boolean on = call.argument("on");
-        switchMicrophone(on, result);
+        Log.e(TAG, "switchMicrophone"+"on"+on+"result"+result);
+        switchMicrophone(Boolean.TRUE.equals(on), result);
         break;
       case "enableSpeaker":
         Boolean enable = call.argument("enable");
-        enableSpeaker(enable, result);
+        Log.e(TAG, "enableSpeaker"+"enable"+enable+"result"+result);
+        enableSpeaker(Boolean.TRUE.equals(enable), result);
         break;
       case "interruptSpeaking":
         interruptSpeaking(result);
         break;
       case "enableVoiceInterrupt":
         Boolean interruptEnable = call.argument("enable");
-        enableVoiceInterrupt(interruptEnable, result);
+        enableVoiceInterrupt(Boolean.TRUE.equals(interruptEnable), result);
         break;
       case "switchRobotVoice":
         String voiceId = call.argument("voiceId");
+        Log.e(TAG, "switchRobotVoice"+"voiceId"+voiceId+"result"+result);
         switchRobotVoice(voiceId, result);
         break;
       default:
@@ -182,10 +188,8 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
     mARTCAICallEngine.setEngineCallback(new ARTCAICallEngine.IARTCAICallEngineCallback() {
       @Override
       public void onErrorOccurs(ARTCAICallEngine.AICallErrorCode errorCode) {
-        if (errorCode.ordinal() >= 1000) {
-          isInCall = false;
-          isJoining = false;
-        }
+          errorCode.ordinal();
+          Log.e(TAG, "onError"+errorCode);
         channel.invokeMethod("onError", errorCode.toString());
       }
 
@@ -193,6 +197,7 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
       public void onCallBegin() {
         isInCall = true;
         isJoining = false;
+        Log.e(TAG, "onCallBegin");
         channel.invokeMethod("onCallBegin", null);
       }
 
@@ -200,68 +205,83 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
       public void onCallEnd() {
         isInCall = false;
         isJoining = false;
+        Log.e(TAG, "onCallEnd");
         channel.invokeMethod("onCallEnd", null);
       }
 
       @Override
       public void onUserSpeaking(boolean isSpeaking) {
+        Log.e(TAG, "onUserSpeaking"+isSpeaking);
         channel.invokeMethod("onUserSpeaking", isSpeaking);
       }
 
       @Override
       public void onAICallEngineRobotStateChanged(ARTCAICallEngine.ARTCAICallRobotState oldState,
                                                   ARTCAICallEngine.ARTCAICallRobotState newState) {
+        Log.e(TAG, "onRobotStateChanged: " + oldState.toString() + " -> " + newState.toString());
         channel.invokeMethod("onRobotStateChanged", newState.toString());
       }
 
       @Override
       public void onUserAsrSubtitleNotify(String text, boolean isSentenceEnd, int sentenceId) {
         // 处理用户语音识别结果
+        Log.e(TAG, "onUserAsrSubtitleNotify: " + text+"isSentenceEnd:"+isSentenceEnd+"sentenceId:"+sentenceId);
+        channel.invokeMethod("onUserAsrSubtitleNotify", text);
       }
 
       @Override
       public void onAIAgentSubtitleNotify(String text, boolean end, int userAsrSentenceId) {
+        // 处理AI助手语音合成结果
+        Log.e(TAG, "onAIAgentSubtitleNotify: " + text+"end:"+end+"userAsrSentenceId:"+userAsrSentenceId);
         channel.invokeMethod("onAIResponse", text);
       }
 
       // 实现其他必要的回调方法...
       @Override
       public void onNetworkStatusChanged(String uid, ARTCAICallEngine.ARTCAICallNetworkQuality quality) {
+        Log.e(TAG, "onNetworkStatusChanged: " + uid + " -> " + quality.toString());
         channel.invokeMethod("onNetworkQuality", quality.ordinal());
       }
 
       @Override
       public void onVoiceVolumeChanged(String uid, int volume) {
+        Log.e(TAG, "onVoiceVolumeChanged: " + uid + " -> " + volume);
         channel.invokeMethod("onVolumeChanged", volume);
       }
 
       @Override
       public void onVoiceIdChanged(String voiceId) {
+        Log.e(TAG, "onVoiceIdChanged: " + voiceId);
         channel.invokeMethod("onVoiceIdChanged", voiceId);
       }
 
       @Override
       public void onVoiceInterrupted(boolean enable) {
+        Log.e(TAG, "onVoiceInterrupted: " + enable);
         channel.invokeMethod("onVoiceInterrupted", enable);
       }
 
       @Override
       public void onAgentVideoAvailable(boolean available) {
+        Log.e(TAG, "onAgentVideoAvailable: " + available);
         channel.invokeMethod("onAgentVideoAvailable", available);
       }
 
       @Override
       public void onAgentAudioAvailable(boolean available) {
+        Log.e(TAG, "onAgentAudioAvailable: " + available);
         channel.invokeMethod("onAgentAudioAvailable", available);
       }
 
       @Override
       public void onAgentAvatarFirstFrameDrawn() {
+        Log.e(TAG, "onAgentAvatarFirstFrameDrawn");
         channel.invokeMethod("onAgentAvatarFirstFrameDrawn", null);
       }
 
       @Override
       public void onUserOnLine(String uid) {
+        Log.e(TAG, "onUserOnLine: " + uid);
         channel.invokeMethod("onUserOnLine", uid);
       }
     });

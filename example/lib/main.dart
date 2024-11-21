@@ -80,8 +80,8 @@ class _AICallDemoState extends State<AICallDemo> {
 
     try {
       await AiCallKit.call(
-          rtcToken: "your_rtc_token_here",
-          aiAgentInstanceId: "default_agent",
+          rtcToken: "cda29e2c-59ce-49fb-83ea-7abfed66b80b",
+          aiAgentInstanceId: "bc25485f-2809-45ed-890a-87ae6a9cab04",
           aiAgentUserId: "ai_agent_001",
           channelId: "demo_channel_${DateTime.now().millisecondsSinceEpoch}");
     } catch (e) {
