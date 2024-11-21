@@ -12,16 +12,16 @@ import android.util.Log;
 
 import com.aliyun.auikits.aiagent.ARTCAICallDepositEngineImpl;
 import com.aliyun.auikits.aiagent.ARTCAICallEngine;
+
 /** AliAiCallPlugin */
 public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
-  /// The MethodChannel that will the communication between Flutter and native Android
-  ///
-  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
-  /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
   private static final String TAG = "AiCallKit";
   private Context context;
   private ARTCAICallEngine mARTCAICallEngine;
+  private boolean isInCall = false;
+  private boolean isJoining = false;
+
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "ali_ai_call");
@@ -59,11 +59,6 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
         Boolean enable = call.argument("enable");
         enableSpeaker(enable, result);
         break;
-      case "setAIRole":
-        String roleId = call.argument("roleId");
-        String roleName = call.argument("roleName");
-        setAIRole(roleId, roleName, result);
-        break;
       case "interruptSpeaking":
         interruptSpeaking(result);
         break;
@@ -93,8 +88,17 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
   }
 
   private void startCall(String rtcToken, String aiAgentInstanceId, String aiAgentUserId,
-                         String channelId, Result result) {
+                        String channelId, Result result) {
+    // 检查是否已经在通话中
+    if (isInCall || isJoining) {
+      result.error("CALL_ERROR", "Already in a call or joining", 
+                  "Please end current call before starting a new one");
+      return;
+    }
+
     try {
+      isJoining = true;
+
       // 设置engine的启动参数
       ARTCAICallEngine.ARTCAICallConfig config = new ARTCAICallEngine.ARTCAICallConfig();
       mARTCAICallEngine.init(config);
@@ -106,6 +110,7 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
       mARTCAICallEngine.call(rtcToken, aiAgentInstanceId, aiAgentUserId, channelId);
       result.success(null);
     } catch (Exception e) {
+      isJoining = false;
       Log.e(TAG, "Failed to start call", e);
       result.error("CALL_ERROR", "Failed to start call", e.getMessage());
     }
@@ -114,6 +119,8 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
   private void hangup(Result result) {
     try {
       mARTCAICallEngine.handup();
+      isInCall = false;
+      isJoining = false;
       result.success(null);
     } catch (Exception e) {
       Log.e(TAG, "Failed to hang up", e);
@@ -124,7 +131,7 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
   private void switchMicrophone(boolean on, Result result) {
     try {
       mARTCAICallEngine.switchMicrophone(on);
-      result.success(null);
+      result.success(true);
     } catch (Exception e) {
       Log.e(TAG, "Failed to switch microphone", e);
       result.error("MIC_ERROR", "Failed to switch microphone", e.getMessage());
@@ -133,21 +140,11 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
 
   private void enableSpeaker(boolean enable, Result result) {
     try {
-      mARTCAICallEngine.enableSpeaker(enable);
-      result.success(null);
+      boolean success = mARTCAICallEngine.enableSpeaker(enable);
+      result.success(success);
     } catch (Exception e) {
       Log.e(TAG, "Failed to switch speaker", e);
       result.error("SPEAKER_ERROR", "Failed to switch speaker", e.getMessage());
-    }
-  }
-
-  private void setAIRole(String roleId, String roleName, Result result) {
-    try {
-      // 根据文档,这个方法可能不存在,需要通过其他方式设置AI角色
-      result.error("UNSUPPORTED", "setAIRole is not supported in current SDK version", null);
-    } catch (Exception e) {
-      Log.e(TAG, "Failed to set AI role", e);
-      result.error("ROLE_ERROR", "Failed to set AI role", e.getMessage());
     }
   }
 
@@ -185,16 +182,24 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
     mARTCAICallEngine.setEngineCallback(new ARTCAICallEngine.IARTCAICallEngineCallback() {
       @Override
       public void onErrorOccurs(ARTCAICallEngine.AICallErrorCode errorCode) {
+        if (errorCode.ordinal() >= 1000) {
+          isInCall = false;
+          isJoining = false;
+        }
         channel.invokeMethod("onError", errorCode.toString());
       }
 
       @Override
       public void onCallBegin() {
+        isInCall = true;
+        isJoining = false;
         channel.invokeMethod("onCallBegin", null);
       }
 
       @Override
       public void onCallEnd() {
+        isInCall = false;
+        isJoining = false;
         channel.invokeMethod("onCallEnd", null);
       }
 
@@ -266,11 +271,15 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
     if (mARTCAICallEngine != null) {
       try {
-        mARTCAICallEngine.handup();
+        if (isInCall || isJoining) {
+          mARTCAICallEngine.handup();
+        }
       } catch (Exception e) {
         Log.e(TAG, "Error releasing resources", e);
       } finally {
         mARTCAICallEngine = null;
+        isInCall = false;
+        isJoining = false;
       }
     }
     channel.setMethodCallHandler(null);

@@ -73,14 +73,22 @@ class _AICallDemoState extends State<AICallDemo> {
   Future<void> _startCall() async {
     if (!_isInitialized) return;
 
+    if (_isInCall) {
+      print('已经在通话中，请先结束当前通话');
+      return;
+    }
+
     try {
       await AiCallKit.call(
-          rtcToken: "your_rtc_token_here", // 替换为实际的token
+          rtcToken: "your_rtc_token_here",
           aiAgentInstanceId: "default_agent",
           aiAgentUserId: "ai_agent_001",
           channelId: "demo_channel_${DateTime.now().millisecondsSinceEpoch}");
     } catch (e) {
       print('开始通话失败: $e');
+      setState(() {
+        _isInCall = false; // 确保状态正确
+      });
     }
   }
 

@@ -5,6 +5,8 @@ import ARTCAICallKit
 public class AliAiCallPlugin: NSObject, FlutterPlugin {
     private var channel: FlutterMethodChannel?
     private var engine: ARTCAICallEngineInterface?
+    private var isInCall: Bool = false
+    private var isJoining: Bool = false
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "ali_ai_call", binaryMessenger: registrar.messenger())
@@ -109,17 +111,29 @@ public class AliAiCallPlugin: NSObject, FlutterPlugin {
     private func startCall(rtcToken: String, aiAgentInstanceId: String, 
                           aiAgentUserId: String, channelId: String, 
                           result: @escaping FlutterResult) {
+        if isInCall || isJoining {
+            result(FlutterError(code: "CALL_ERROR",
+                              message: "Already in a call or joining",
+                              details: "Please end current call before starting a new one"))
+            return
+        }
+        
+        isJoining = true
+        
         let agentInfo = ARTCAICallAgentInfo(agentType: ARTCAICallAgentType.VoiceAgent,
                                           channelId: channelId,
                                           uid: aiAgentUserId,
                                           instanceId: aiAgentInstanceId)
         
         engine?.call(userId: aiAgentUserId, token: rtcToken, agentInfo: agentInfo) { [weak self] error in
+            self?.isJoining = false
+            
             if let error = error {
                 result(FlutterError(code: "CALL_ERROR",
                                   message: "Failed to start call",
                                   details: error.localizedDescription))
             } else {
+                self?.isInCall = true
                 result(nil)
             }
         }
@@ -127,6 +141,8 @@ public class AliAiCallPlugin: NSObject, FlutterPlugin {
     
     private func hangup(result: @escaping FlutterResult) {
         engine?.handup(true)
+        isInCall = false
+        isJoining = false
         result(nil)
     }
     
@@ -169,14 +185,22 @@ public class AliAiCallPlugin: NSObject, FlutterPlugin {
 // MARK: - ARTCAICallEngineDelegate
 extension AliAiCallPlugin: ARTCAICallEngineDelegate {
     public func onErrorOccurs(code: ARTCAICallErrorCode) {
+        if code.rawValue >= 1000 {
+            isInCall = false
+            isJoining = false
+        }
         channel?.invokeMethod("onError", arguments: code.rawValue)
     }
     
     public func onCallBegin() {
+        isInCall = true
+        isJoining = false
         channel?.invokeMethod("onCallBegin", arguments: nil)
     }
     
     public func onCallEnd() {
+        isInCall = false
+        isJoining = false
         channel?.invokeMethod("onCallEnd", arguments: nil)
     }
     
