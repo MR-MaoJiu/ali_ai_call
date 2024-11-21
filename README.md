@@ -1,4 +1,4 @@
-# ai_call_kit
+# ali_ai_call
 
 基于阿里云智能媒体服务的AI实时互动Flutter插件。
 
