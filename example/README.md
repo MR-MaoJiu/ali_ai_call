@@ -1,16 +1,28 @@
 # ali_ai_call_example
 
-Demonstrates how to use the ali_ai_call plugin.
+这是ali_ai_call插件的示例应用。
 
-## Getting Started
+## 项目结构
 
-This project is a starting point for a Flutter application.
+example/lib/
+  ├── main.dart              # 应用入口
+  ├── models/                # 数据模型
+  │   └── message.dart       # 消息模型
+  ├── screens/               # 页面
+  │   └── chat_screen.dart   # 聊天主界面
+  ├── services/              # 服务
+  │   └── ai_service.dart    # AI服务接口
+  └── widgets/               # 组件
+      └── message_bubble.dart # 消息气泡组件
 
-A few resources to get you started if this is your first Flutter project:
+## 使用说明
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. 确保已安装所有依赖：
+   ```bash
+   flutter pub get
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. 运行示例：
+   ```bash
+   flutter run
+   ```
