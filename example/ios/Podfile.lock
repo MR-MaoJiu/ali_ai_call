@@ -1,0 +1,37 @@
+PODS:
+  - ali_ai_call (0.0.1):
+    - AliVCSDK_ARTC (~> 6.11.3)
+    - ARTCAICallKit (~> 1.2.0)
+    - Flutter
+  - AliVCSDK_ARTC (6.11.3):
+    - AliVCSDK_ARTC/Default (= 6.11.3)
+  - AliVCSDK_ARTC/Default (6.11.3)
+  - ARTCAICallKit (1.2.0)
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - ali_ai_call (from `.symlinks/plugins/ali_ai_call/ios`)
+  - AliVCSDK_ARTC (~> 6.11.3)
+  - ARTCAICallKit (~> 1.2.0)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - AliVCSDK_ARTC
+    - ARTCAICallKit
+
+EXTERNAL SOURCES:
+  ali_ai_call:
+    :path: ".symlinks/plugins/ali_ai_call/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  ali_ai_call: 484f4ece2d79719a4e6ead78dde3963a02474764
+  AliVCSDK_ARTC: bfa6d03e44c52af1a46c9c1b681a22edca36ec01
+  ARTCAICallKit: 0206b0c0904163e166a3a9b0c9003166dfe02c63
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+
+PODFILE CHECKSUM: 4e71b4030bad467d4941cdcac9f5e7339add49e0
+
+COCOAPODS: 1.16.2
