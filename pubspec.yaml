@@ -1,0 +1,29 @@
+name: ali_ai_call
+description: "A new Flutter project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.ali_ai_call
+        pluginClass: AliAiCallPlugin
+      ios:
+        pluginClass: AliAiCallPlugin
+

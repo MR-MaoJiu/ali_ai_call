@@ -1,0 +1,23 @@
+name: ali_ai_call_example
+description: "Demonstrates how to use the ali_ai_call plugin."
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.3.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  ali_ai_call:
+    path: ../
+  dio: ^5.4.0
+  shared_preferences: ^2.2.2
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,27 @@
+server:
+  port: 8081
+
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    default-property-inclusion: non_null
+
+# pop配置
+biz:
+  openapi:
+    access:
+      key: "XXX"
+      secret: "XXX"
+  live_mic:
+    app_id: "XXX"
+    app_key: "XXX"
+    gslb: https://gw.rtn.aliyuncs.com
+  ai_aent:
+    voice_chat_ai_agent_id: "XX"
+    avatar_ai_chat_3d_agent_id: "xxxxxxx"
+    vision_chat_ai_agent_id: "xxxxxxx"
+    region: "cn-shanghai"
+http:
+  cors:
+    host: "*"
