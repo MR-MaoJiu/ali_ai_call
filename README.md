@@ -16,7 +16,7 @@
 
 ## 环境要求
 
-- Flutter: >=2.0.0
+- Flutter: >=3.3.0
 - iOS: >= 12.0
 - Android: minSdkVersion 19
 
