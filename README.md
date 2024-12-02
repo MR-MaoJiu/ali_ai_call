@@ -60,7 +60,7 @@ source 'https://cdn.cocoapods.org/'
 ```
 
 ## 使用方法
-
+### 后端服务需要正常运行，可以在本项目中找到Server配置文件修改配置文件中的配置然后运行一下
 ### 初始化
 
 ```dart
@@ -232,3 +232,7 @@ onError: (error) {
 ## License
 
 MIT License
+
+## 开源不易觉得好用给个Star或者赞助一下
+
+![img.png](./document/img.png)
