@@ -64,13 +64,13 @@ source 'https://cdn.cocoapods.org/'
 ### 初始化
 
 ```dart
-await AiCallKit.initEngine(userId: "your_user_id");
+await AliAiCall.initEngine(userId: "your_user_id");
 ```
 
 ### 设置回调
 
 ```dart
-AiCallKit.setEngineCallback(
+AliAiCall.setEngineCallback(
   onCallBegin: () {
     print('通话开始');
   },
@@ -106,7 +106,7 @@ AiCallKit.setEngineCallback(
 ### 开始通话
 
 ```dart
-await AiCallKit.call(
+await AliAiCall.call(
   rtcToken: "your_rtc_token",
   aiAgentInstanceId: "your_instance_id",
   aiAgentUserId: "your_agent_user_id",
@@ -117,33 +117,33 @@ await AiCallKit.call(
 ### 结束通话
 
 ```dart
-await AiCallKit.hangup();
+await AliAiCall.hangup();
 ```
 
 ### 音频控制
 
 ```dart
 // 切换麦克风
-await AiCallKit.switchMicrophone(true/false);
+await AliAiCall.switchMicrophone(true/false);
 
 // 切换扬声器
-await AiCallKit.enableSpeaker(true/false);
+await AliAiCall.enableSpeaker(true/false);
 
 // 打断 AI 说话
-await AiCallKit.interruptSpeaking();
+await AliAiCall.interruptSpeaking();
 
 // 启用语音打断
-await AiCallKit.enableVoiceInterrupt(true/false);
+await AliAiCall.enableVoiceInterrupt(true/false);
 ```
 
 ### AI控制
 
 ```dart
 // 切换 AI 音色
-await AiCallKit.switchRobotVoice("voice_id");
+await AliAiCall.switchRobotVoice("voice_id");
 
 // 设置 AI 角色
-await AiCallKit.setAIRole("role_id", "role_name");
+await AliAiCall.setAIRole("role_id", "role_name");
 ```
 
 ## 回调参数说明
