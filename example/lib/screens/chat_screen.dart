@@ -1,5 +1,5 @@
+import 'package:ali_ai_call/ali_ai_call.dart';
 import 'package:flutter/material.dart';
-import 'package:ali_ai_call/ai_call_kit.dart';
 import '../models/message.dart';
 import '../services/ai_service.dart';
 import '../services/config_service.dart';
@@ -35,14 +35,14 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _initAICallKit();
+    _initAliAiCall();
   }
 
-  void _initAICallKit() async {
+  void _initAliAiCall() async {
     final config = await ConfigService.getConfig();
-    await AiCallKit.initEngine(userId: config['userId'] ?? '9527');
+    await AliAiCall.initEngine(userId: config['userId'] ?? '9527');
 
-    AiCallKit.setEngineCallback(
+    AliAiCall.setEngineCallback(
       onCallBegin: () {
         setState(() {
           _isInCall = true;
@@ -140,7 +140,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
       _addMessage("已获取通话配置...", false);
 
-      await AiCallKit.call(
+      await AliAiCall.call(
         rtcToken: callConfig.rtcAuthToken ?? '',
         aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
         aiAgentUserId: callConfig.aiAgentUserId ?? '',
@@ -164,7 +164,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _endCall() async {
     try {
-      await AiCallKit.hangup();
+      await AliAiCall.hangup();
       setState(() {
         _isInCall = false;
         _isMicOn = true;
@@ -185,7 +185,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _toggleMicrophone() async {
     try {
-      await AiCallKit.switchMicrophone(!_isMicOn);
+      await AliAiCall.switchMicrophone(!_isMicOn);
       setState(() {
         _isMicOn = !_isMicOn;
       });
@@ -198,7 +198,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _toggleSpeaker() async {
     try {
-      await AiCallKit.enableSpeaker(!_isSpeakerOn);
+      await AliAiCall.enableSpeaker(!_isSpeakerOn);
       setState(() {
         _isSpeakerOn = !_isSpeakerOn;
       });
@@ -349,7 +349,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ElevatedButton.icon(
                     icon: const Icon(Icons.voice_over_off),
                     label: const Text('打断AI'),
-                    onPressed: () => AiCallKit.interruptSpeaking(),
+                    onPressed: () => AliAiCall.interruptSpeaking(),
                   ),
               ],
             ),

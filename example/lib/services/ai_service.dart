@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:ali_ai_call/ai_call_kit.dart';
 import 'config_service.dart';
 
 class AIService {

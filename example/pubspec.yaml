@@ -1,7 +1,8 @@
 name: ali_ai_call_example
 description: "Demonstrates how to use the ali_ai_call plugin."
 publish_to: 'none'
-
+version: 1.0.0
+homepage: "https://github.com/MR-MaoJiu/ali_ai_call"
 environment:
   sdk: '>=3.3.1 <4.0.0'
 
