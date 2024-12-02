@@ -11,12 +11,10 @@ class ConfigScreen extends StatefulWidget {
 
 class _ConfigScreenState extends State<ConfigScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _userIdController = TextEditingController(text: '9527');
-  final _aiAgentIdController =
-      TextEditingController(text: '48dbfc0f1a0e45cd99f9feef9e36bf76');
-  final _workflowTypeController =
-      TextEditingController(text: 'System_VoiceChat');
-  final _regionController = TextEditingController(text: 'cn-hangzhou');
+  final _userIdController = TextEditingController();
+  final _aiAgentIdController = TextEditingController();
+  final _workflowTypeController = TextEditingController();
+  final _regionController = TextEditingController();
 
   @override
   void initState() {
@@ -29,10 +27,10 @@ class _ConfigScreenState extends State<ConfigScreen> {
     setState(() {
       _userIdController.text = prefs.getString('userId') ?? '9527';
       _aiAgentIdController.text =
-          prefs.getString('aiAgentId') ?? '48dbfc0f1a0e45cd99f9feef9e36bf76';
+          prefs.getString('aiAgentId') ?? 'f22071db56834e82a14755be5b20a9c1';
       _workflowTypeController.text =
           prefs.getString('workflowType') ?? 'System_VoiceChat';
-      _regionController.text = prefs.getString('region') ?? 'cn-hangzhou';
+      _regionController.text = prefs.getString('region') ?? 'cn-shanghai';
     });
   }
 

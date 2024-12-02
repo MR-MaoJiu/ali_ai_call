@@ -4,7 +4,7 @@ import 'package:ali_ai_call/ai_call_kit.dart';
 import 'config_service.dart';
 
 class AIService {
-  static const String baseUrl = 'http://172.25.11.96:8081';
+  static const String baseUrl = 'http://172.25.2.232:9683';
   final Dio _dio = Dio(BaseOptions(
     baseUrl: baseUrl,
     connectTimeout: const Duration(seconds: 5),

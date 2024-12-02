@@ -84,9 +84,8 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           _currentUid = volumeData['uid'] as String;
           final int volume = volumeData['volume'] as int;
-          _currentVolume = math.max(0, math.min(100, volume));
-          _isUserSpeaking = _currentVolume > 0;
-          print('Volume Changed: $_currentVolume, Speaking: $_isUserSpeaking');
+          _isUserSpeaking = volume > 0;
+          print('Volume Changed: $volume, Speaking: $_isUserSpeaking');
         });
       },
       onAIAgentASRMessage: (Map<String, dynamic> asrData) {
