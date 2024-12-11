@@ -55,8 +55,8 @@ android {
     dependencies {
         testImplementation 'junit:junit:4.13.2'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        implementation 'com.aliyun.aio:AliVCSDK_ARTC:6.11.3'
-        implementation 'com.aliyun.auikits.android:ARTCAICallKit:1.2.0'
+        implementation 'com.aliyun.aio:AliVCSDK_ARTC:6.18.0'
+        implementation 'com.aliyun.auikits.android:ARTCAICallKit:1.5.0'
         compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
         compileOnly 'androidx.annotation:annotation:1.1.0'
         implementation 'com.squareup.okhttp3:okhttp:4.9.1'
