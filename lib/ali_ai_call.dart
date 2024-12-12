@@ -1,6 +1,6 @@
 import 'ali_ai_call_platform_interface.dart';
 import 'ali_ai_call_method_channel.dart';
-import 'src/voice_print_status.dart';
+export 'src/voice_print_status.dart';
 
 /// 阿里云 AI 通话插件
 /// 提供了与 AI 通话相关的所有功能接口
