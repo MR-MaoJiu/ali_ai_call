@@ -1,6 +1,6 @@
 name: ali_ai_call
 description: "阿里云智能对话插件的Flutter实现，支持iOS和Android平台。提供语音通话、ASR、TTS等功能。"
-version: 0.0.2
+version: 1.0.0
 homepage: https://github.com/MR-MaoJiu/ali_ai_call
 repository: https://github.com/MR-MaoJiu/ali_ai_call
 

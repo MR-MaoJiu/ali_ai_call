@@ -1,0 +1,28 @@
+install! 'cocoapods', :disable_input_output_paths => true
+
+platform :ios, '12.0'
+
+# 确保有这两个源
+source 'https://github.com/aliyun/aliyun-specs.git'
+source 'https://cdn.cocoapods.org/'
+
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+  
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  # 添加以下配置来解决冲突
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['EXPANDED_CODE_SIGN_IDENTITY'] = ""
+        config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+        config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+        
+        # 添加这行来解决 umbrella header 冲突
+        config.build_settings['DEFINES_MODULE'] = 'YES'
+      end
+    end
+  end
+end 

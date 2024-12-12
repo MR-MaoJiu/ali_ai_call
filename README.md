@@ -238,6 +238,18 @@ onError: (error) {
 3. Q: 语音识别不准确怎么办?
    A: 建议在安静环境使用,说话清晰度也重要
 
+4. Q: 遇到 "Multiple commands produce xxx-umbrella.h" 错误怎么办?
+   A: 这是 Xcode 构建冲突导致的问题，解决步骤如下：
+   - 修改 ios/Podfile，添加 `install! 'cocoapods', :disable_input_output_paths => true`
+   - 在 post_install 中添加 `config.build_settings['DEFINES_MODULE'] = 'YES'`
+   - 执行清理和重装：
+     ```bash
+     cd ios
+     pod deintegrate
+     pod cache clean --all
+     pod install
+     ```
+
 ## 更新日志
 
 ### 1.0.0
