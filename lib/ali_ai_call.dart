@@ -2,31 +2,28 @@ import 'ali_ai_call_platform_interface.dart';
 import 'ali_ai_call_method_channel.dart';
 import 'src/voice_print_status.dart';
 
-/// 阿里云 AI 通话插件的主类
+/// 阿里云 AI 通话插件
 /// 提供了与 AI 通话相关的所有功能接口
 class AliAiCall {
   /// 获取平台实现实例
   static AliAiCallPlatform get _platform => AliAiCallPlatform.instance;
 
   /// 设置引擎回调函数
-  /// 用于接收来自原生平台的各种事件通知
   ///
   /// [onCallBegin] 通话开始回调
   /// [onCallEnd] 通话结束回调
-  /// [onError] 错误回调，参数为错误信息
-  /// [onAIResponse] AI响应回调，参数为响应内容
-  /// [onUserSpeaking] 用户说话状态回调，true表示正在说话
-  /// [onNetworkQuality] 网络质量回调，参数为质量等级(0-6)
-  /// [onVideoSizeChanged] 视频尺寸变化回调，包含宽高信息
-  /// [onVoiceIdChanged] 声音ID变化回调
+  /// [onError] 错误回调,参数为错误信息
+  /// [onAIResponse] AI 响应回调,参数为响应内容
+  /// [onUserSpeaking] 用户说话状态回调,true 表示正在说话
+  /// [onNetworkQuality] 网络质量回调,参数为质量等级(0-6)
+  /// [onVideoSizeChanged] 视频尺寸变化回调,包含宽高信息
+  /// [onVoiceIdChanged] 声音 ID 变化回调
   /// [onRoleChanged] 角色变化回调
-  /// [onAIAgentStateChanged] AI代理状态变化回调
-  /// [onAIAgentASRMessage] AI代理ASR消息回调，语音识别结果
-  /// [onAIAgentTTSMessage] AI代理TTS消息回调，语音合成信息
-  /// [onVolumeChanged] 音量变化回调，包含音量大小信息
-  /// [onUserAsrSubtitleNotify] 用户ASR字幕通知回调
-  /// [onAIAgentSubtitleNotify] AI代理字幕通知回调
-  static void setEngineCallback({
+  /// [onAIAgentStateChanged] AI 代理状态变化回调
+  /// [onUserAsrSubtitleNotify] 用户语音识别字幕通知回调
+  /// [onAIAgentSubtitleNotify] AI 代理字幕通知回调
+  /// [onVolumeChanged] 音量变化回调
+  static void setEngineEventHandler({
     void Function()? onCallBegin,
     void Function()? onCallEnd,
     void Function(String)? onError,
