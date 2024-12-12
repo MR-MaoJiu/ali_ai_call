@@ -1,13 +1,13 @@
-# Ali AI Call Plugin
+# ali_ai_call
 
-阿里云智能对话插件的Flutter实现,支持iOS和Android平台。
+阿里云 AI 通话 Flutter 插件,支持实时语音对话、语音识别、声纹识别等功能。
 
 ## 功能特性
 
-- 语音通话
-- 实时语音转文字(ASR)
-- 文字转语音(TTS)
-- 音量监控
+- AI 语音通话
+- 声纹识别
+- 实时语音识别(ASR)
+- 语音合成(TTS) 
 - 网络质量监控
 - 麦克风/扬声器控制
 - AI语音打断
@@ -70,7 +70,7 @@ await AliAiCall.initEngine(userId: "your_user_id");
 ### 设置回调
 
 ```dart
-AliAiCall.setEngineCallback(
+AliAiCall.setEngineEventHandler(
   onCallBegin: () {
     print('通话开始');
   },
