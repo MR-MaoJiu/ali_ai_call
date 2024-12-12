@@ -187,7 +187,7 @@ await AliAiCall.setAIRole("role_id", "role_name");
 | 参数 | 类型 | 说明 |
 |-----|------|-----|
 | uid | String | 用户ID |
-| volume | int | 音量大小(0-100) |
+| volume | int | 音量大小 |
 
 ## 错误处理
 
