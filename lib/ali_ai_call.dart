@@ -1,5 +1,6 @@
 import 'ali_ai_call_platform_interface.dart';
 import 'ali_ai_call_method_channel.dart';
+import 'src/voice_print_status.dart';
 
 /// 阿里云 AI 通话插件的主类
 /// 提供了与 AI 通话相关的所有功能接口
@@ -24,6 +25,7 @@ class AliAiCall {
   /// [onAIAgentTTSMessage] AI代理TTS消息回调，语音合成信息
   /// [onVolumeChanged] 音量变化回调，包含音量大小信息
   /// [onUserAsrSubtitleNotify] 用户ASR字幕通知回调
+  /// [onAIAgentSubtitleNotify] AI代理字幕通知回调
   static void setEngineCallback({
     void Function()? onCallBegin,
     void Function()? onCallEnd,
@@ -35,10 +37,9 @@ class AliAiCall {
     void Function(String)? onVoiceIdChanged,
     void Function(String)? onRoleChanged,
     void Function(String)? onAIAgentStateChanged,
-    void Function(Map<String, dynamic>)? onAIAgentASRMessage,
-    void Function(Map<String, dynamic>)? onAIAgentTTSMessage,
-    void Function(Map<String, dynamic>)? onVolumeChanged,
     void Function(Map<String, dynamic>)? onUserAsrSubtitleNotify,
+    void Function(Map<String, dynamic>)? onAIAgentSubtitleNotify,
+    void Function(Map<String, dynamic>)? onVolumeChanged,
   }) {
     if (_platform is MethodChannelAliAiCall) {
       (_platform as MethodChannelAliAiCall).setEngineCallback(
@@ -52,10 +53,9 @@ class AliAiCall {
         onVoiceIdChanged: onVoiceIdChanged,
         onRoleChanged: onRoleChanged,
         onAIAgentStateChanged: onAIAgentStateChanged,
-        onAIAgentASRMessage: onAIAgentASRMessage,
-        onAIAgentTTSMessage: onAIAgentTTSMessage,
-        onVolumeChanged: onVolumeChanged,
         onUserAsrSubtitleNotify: onUserAsrSubtitleNotify,
+        onAIAgentSubtitleNotify: onAIAgentSubtitleNotify,
+        onVolumeChanged: onVolumeChanged,
       );
     }
   }

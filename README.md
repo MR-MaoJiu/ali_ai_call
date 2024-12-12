@@ -85,9 +85,29 @@ AliAiCall.setEngineCallback(
     String text = data['text'];
     bool isSentenceEnd = data['isSentenceEnd'];
     int sentenceId = data['sentenceId'];
+    VoicePrintStatusCode voicePrintStatus = data['voicePrintStatus'];
+    
+    switch (voicePrintStatus) {
+      case VoicePrintStatusCode.speakerRecognized:
+        print('说话人已识别');
+        break;
+      case VoicePrintStatusCode.speakerNotRecognized:
+        print('说话人未识别');
+        break;
+      case VoicePrintStatusCode.disable:
+        print('声纹识别已禁用');
+        break;
+      case VoicePrintStatusCode.enableWithoutRegister:
+        print('声纹识别已启用但未注册');
+        break;
+      case VoicePrintStatusCode.unknown:
+        print('未知状态');
+        break;
+    }
+    
     print('用户语音识别: $text');
   },
-  onAIAgentTTSMessage: (Map<String, dynamic> data) {
+  onAIAgentSubtitleNotify: (Map<String, dynamic> data) {
     // AI回复文本
     String text = data['text'];
     bool isSentenceEnd = data['isSentenceEnd'];
@@ -154,8 +174,9 @@ await AliAiCall.setAIRole("role_id", "role_name");
 | text | String | 识别到的文本内容 |
 | isSentenceEnd | bool | 是否是句子结束 |
 | sentenceId | int | 句子ID |
+| voicePrintStatus | VoicePrintStatusCode | 声纹状态，可能的值: <br> - disable: 禁用 <br> - enableWithoutRegister: 启用但未注册 <br> - speakerRecognized: 说话人已识别 <br> - speakerNotRecognized: 说话人未识别 <br> - unknown: 未知状态 |
 
-### onAIAgentTTSMessage
+### onAIAgentSubtitleNotify
 | 参数 | 类型 | 说明 |
 |-----|------|-----|
 | text | String | AI回复的文本内容 |
@@ -215,7 +236,7 @@ onError: (error) {
    A: 检查音量设置和权限是否正确
 
 3. Q: 语音识别不准确怎么办?
-   A: 建议在安静环境使用,说话清晰度也很重要
+   A: 建议在安静环境使用,说话清晰度也重要
 
 ## 更新日志
 

@@ -291,11 +291,12 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
       }
 
       @Override
-      public void onUserAsrSubtitleNotify(String text, boolean isSentenceEnd, int sentenceId) {
+      public void onUserAsrSubtitleNotify(String text, boolean isSentenceEnd, int sentenceId, ARTCAICallEngine.VoicePrintStatusCode voicePrintStatusCode) {
         Map<String, Object> arguments = new HashMap<>();
         arguments.put("text", text);
         arguments.put("isSentenceEnd", isSentenceEnd);
         arguments.put("sentenceId", sentenceId);
+        arguments.put("voicePrintStatus", voicePrintStatusCode.name());
         channel.invokeMethod("onUserAsrSubtitleNotify", arguments);
       }
 
@@ -305,7 +306,7 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
         arguments.put("text", text);
         arguments.put("isSentenceEnd", end);
         arguments.put("userAsrSentenceId", userAsrSentenceId);
-        channel.invokeMethod("onAIAgentTTSMessage", arguments);
+        channel.invokeMethod("onAIAgentSubtitleNotify", arguments);
       }
 
       // 实现其他必要的回调方法...

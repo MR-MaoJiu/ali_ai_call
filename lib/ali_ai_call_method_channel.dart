@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'ali_ai_call_platform_interface.dart';
+import 'src/voice_print_status.dart';
 
 /// 通过 MethodChannel 实现的阿里云 AI 通话插件
 /// 负责与原生平台进行通信
@@ -34,23 +35,20 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
   /// 声音ID变化回调
   void Function(String)? _onVoiceIdChanged;
 
-  /// 角色变化回调
+  /// ���色变化回调
   void Function(String)? _onRoleChanged;
 
   /// AI代理状态变化回调
   void Function(String)? _onAIAgentStateChanged;
 
-  /// AI代理ASR消息回调，语音识别结果
-  void Function(Map<String, dynamic>)? _onAIAgentASRMessage;
+  /// 用户ASR字幕通知回调
+  void Function(Map<String, dynamic>)? _onUserAsrSubtitleNotify;
 
-  /// AI代理TTS消息回调，语音合成信息
-  void Function(Map<String, dynamic>)? _onAIAgentTTSMessage;
+  /// AI代理字幕通知回调
+  void Function(Map<String, dynamic>)? _onAIAgentSubtitleNotify;
 
   /// 音量变化回调，包含音量大小信息
   void Function(Map<String, dynamic>)? _onVolumeChanged;
-
-  /// 用户ASR字幕通知回调
-  void Function(Map<String, dynamic>)? _onUserAsrSubtitleNotify;
 
   @override
   Future<void> initEngine({required String userId}) async {
@@ -125,10 +123,9 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
     void Function(String)? onVoiceIdChanged,
     void Function(String)? onRoleChanged,
     void Function(String)? onAIAgentStateChanged,
-    void Function(Map<String, dynamic>)? onAIAgentASRMessage,
-    void Function(Map<String, dynamic>)? onAIAgentTTSMessage,
-    void Function(Map<String, dynamic>)? onVolumeChanged,
     void Function(Map<String, dynamic>)? onUserAsrSubtitleNotify,
+    void Function(Map<String, dynamic>)? onAIAgentSubtitleNotify,
+    void Function(Map<String, dynamic>)? onVolumeChanged,
   }) {
     _onCallBegin = onCallBegin;
     _onCallEnd = onCallEnd;
@@ -140,10 +137,9 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
     _onVoiceIdChanged = onVoiceIdChanged;
     _onRoleChanged = onRoleChanged;
     _onAIAgentStateChanged = onAIAgentStateChanged;
-    _onAIAgentASRMessage = onAIAgentASRMessage;
-    _onAIAgentTTSMessage = onAIAgentTTSMessage;
-    _onVolumeChanged = onVolumeChanged;
     _onUserAsrSubtitleNotify = onUserAsrSubtitleNotify;
+    _onAIAgentSubtitleNotify = onAIAgentSubtitleNotify;
+    _onVolumeChanged = onVolumeChanged;
   }
 
   /// 设置方法通道回调处理器
@@ -182,20 +178,25 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
         case 'onAIAgentStateChanged':
           _onAIAgentStateChanged?.call(call.arguments as String);
           break;
-        case 'onAIAgentASRMessage':
-          _onAIAgentASRMessage
-              ?.call(Map<String, dynamic>.from(call.arguments as Map));
+        case 'onUserAsrSubtitleNotify':
+          if (_onUserAsrSubtitleNotify != null) {
+            final Map<String, dynamic> args =
+                Map<String, dynamic>.from(call.arguments as Map);
+            // 将字符串转换为枚举
+            if (args.containsKey('voicePrintStatus')) {
+              final status = VoicePrintStatusCode.fromString(
+                  args['voicePrintStatus'] as String);
+              args['voicePrintStatus'] = status;
+            }
+            _onUserAsrSubtitleNotify?.call(args);
+          }
           break;
-        case 'onAIAgentTTSMessage':
-          _onAIAgentTTSMessage
+        case 'onAIAgentSubtitleNotify':
+          _onAIAgentSubtitleNotify
               ?.call(Map<String, dynamic>.from(call.arguments as Map));
           break;
         case 'onVolumeChanged':
           _onVolumeChanged
-              ?.call(Map<String, dynamic>.from(call.arguments as Map));
-          break;
-        case 'onUserAsrSubtitleNotify':
-          _onUserAsrSubtitleNotify
               ?.call(Map<String, dynamic>.from(call.arguments as Map));
           break;
       }
