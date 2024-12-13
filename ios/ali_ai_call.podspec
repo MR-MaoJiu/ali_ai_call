@@ -21,8 +21,8 @@ A Flutter plugin for Ali AI Call Kit.
   
   # 基础依赖配置
   s.dependency 'Flutter'
-#   s.dependency 'ARTCAICallKit', '~> 1.2.0'
-#   s.dependency 'AliVCSDK_ARTC', '~> 6.11.3'
+  s.dependency 'ARTCAICallKit', '~> 1.2.0'
+  s.dependency 'AliVCSDK_ARTC', '~> 6.11.3'
   
   # Framework 配置
   s.ios.framework = ['Flutter']
