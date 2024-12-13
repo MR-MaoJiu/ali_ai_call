@@ -250,6 +250,34 @@ onError: (error) {
      pod install
      ```
 
+## 常见问题解决方案
+
+### iOS 编译错误：Multiple commands produce 'ali_ai_call-umbrella.h'
+
+如果遇到 umbrella header 重复的编译错误，请按照以下步骤解决：
+
+1. 确保 podspec 文件中正确配置了 source_files 和 public_header_files
+2. 删除 ios/Classes 目录下的重复 umbrella header 文件
+3. 清理并重新安装 pods：
+   ```bash
+   cd example/ios
+   pod deintegrate
+   pod cache clean --all
+   rm -rf Pods
+   rm -rf .symlinks
+   rm Podfile.lock
+   pod install
+   ```
+4. 重新构建项目：
+   ```bash
+   flutter clean
+   flutter pub get
+   cd example/ios
+   pod install
+   cd ..
+   flutter build ios
+   ```
+
 ## 更新日志
 
 ### 1.0.0
