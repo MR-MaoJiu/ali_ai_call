@@ -223,7 +223,7 @@ extension AliAiCallPlugin: ARTCAICallEngineDelegate {
             "isSentenceEnd": isSentenceEnd,
             "userAsrSentenceId": userAsrSentenceId
         ]
-        channel?.invokeMethod("onAIAgentTTSMessage", arguments: arguments)
+        channel?.invokeMethod("onAIAgentSubtitleNotify", arguments: arguments)
     }
     
     public func onVoiceIdChanged(voiceId: String) {
