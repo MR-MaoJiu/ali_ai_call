@@ -28,6 +28,9 @@ A Flutter plugin for Ali AI Call Kit.
   s.ios.framework = ['Flutter']
   s.frameworks = 'Foundation', 'UIKit'
   
+  # 允许静态库
+  s.static_framework = true
+  
   # 搜索路径配置
   s.xcconfig = { 
     'FRAMEWORK_SEARCH_PATHS' => [
@@ -37,7 +40,10 @@ A Flutter plugin for Ali AI Call Kit.
       '"${PODS_ROOT}/../.symlinks/flutter/ios"',
       '"${PODS_CONFIGURATION_BUILD_DIR}/Flutter"'
     ].join(' '),
-    'OTHER_LDFLAGS' => '-ObjC'
+    'OTHER_LDFLAGS' => '-ObjC -all_load',
+    'ENABLE_BITCODE' => 'NO',
+    'VALID_ARCHS' => 'arm64 x86_64',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
   }
   
   # 编译配置
@@ -45,7 +51,8 @@ A Flutter plugin for Ali AI Call Kit.
     'DEFINES_MODULE' => 'YES',
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
     'ENABLE_BITCODE' => 'NO',
-    'VALID_ARCHS' => 'arm64 x86_64'
+    'VALID_ARCHS' => 'arm64 x86_64',
+    'BUILD_LIBRARY_FOR_DISTRIBUTION' => 'YES'
   }
   
   s.swift_version = '5.0'

@@ -1,5 +1,5 @@
 PODS:
-  - ali_ai_call (0.0.1):
+  - ali_ai_call (1.0.0):
     - AliVCSDK_ARTC (~> 6.11.3)
     - ARTCAICallKit (~> 1.2.0)
     - Flutter
@@ -33,7 +33,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
 SPEC CHECKSUMS:
-  ali_ai_call: 63783662ebaf1150de99b502a7cef9c626151c81
+  ali_ai_call: 63e34fd6ca66fe5894835184b3b2217f64db60fc
   AliVCSDK_ARTC: bfa6d03e44c52af1a46c9c1b681a22edca36ec01
   ARTCAICallKit: 0206b0c0904163e166a3a9b0c9003166dfe02c63
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7

@@ -5,10 +5,9 @@ import '../services/ai_service.dart';
 import '../services/config_service.dart';
 import '../widgets/message_bubble.dart';
 import '../widgets/audio_visualizer.dart';
-import 'dart:math' as math;
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({super.key});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -42,7 +41,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final config = await ConfigService.getConfig();
     await AliAiCall.initEngine(userId: config['userId'] ?? '9527');
 
-    AliAiCall.setEngineCallback(
+    AliAiCall.setEngineEventHandler(
       onCallBegin: () {
         setState(() {
           _isInCall = true;
@@ -88,14 +87,9 @@ class _ChatScreenState extends State<ChatScreen> {
           print('Volume Changed: $volume, Speaking: $_isUserSpeaking');
         });
       },
-      onAIAgentASRMessage: (Map<String, dynamic> asrData) {
+      onAIAgentSubtitleNotify: (Map<String, dynamic> asrData) {
         setState(() {
           _currentASRText = asrData['text'] as String;
-        });
-      },
-      onAIAgentTTSMessage: (Map<String, dynamic> ttsData) {
-        setState(() {
-          _currentTTSText = ttsData['text'] as String;
         });
       },
       onUserAsrSubtitleNotify: (Map<String, dynamic> data) {
