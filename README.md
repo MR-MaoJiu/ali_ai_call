@@ -40,15 +40,6 @@ dependencies:
 <string>需要访问相机进行视频通话</string>
 ```
 
-确保在 `Podfile` 中设置正确的iOS版本和源:
-
-```ruby
-platform :ios, '12.0'
-
-source 'https://github.com/aliyun/aliyun-specs.git'
-source 'https://cdn.cocoapods.org/'
-```
-
 3. Android 配置:
 
 在 `android/app/src/main/AndroidManifest.xml` 添加权限:
@@ -240,44 +231,29 @@ onError: (error) {
 
 4. Q: 遇到 "Multiple commands produce xxx-umbrella.h" 错误怎么办?
    A: 这是 Xcode 构建冲突导致的问题，解决步骤如下：
-   - 修改 ios/Podfile，添加 `install! 'cocoapods', :disable_input_output_paths => true`
-   - 在 post_install 中添加 `config.build_settings['DEFINES_MODULE'] = 'YES'`
-   - 执行清理和重装：
-     ```bash
-     cd ios
-     pod deintegrate
-     pod cache clean --all
-     pod install
-     ```
+   1. 确保 podspec 文件中正确配置了 source_files 和 public_header_files
+   2. 删除 ios/Classes 目录下的重复 umbrella header 文件
+   3. 清理并重新安装 pods：
+      ```bash
+      cd example/ios
+      pod deintegrate
+      pod cache clean --all
+      rm -rf Pods
+      rm -rf .symlinks
+      rm Podfile.lock
+      pod install
+      ```
+   4. 重新构建项目：
+      ```bash
+      flutter clean
+      flutter pub get
+      cd example/ios
+      pod install
+      cd ..
+      flutter build ios
+      ```
 
-## 常见问题解决方案
-
-### iOS 编译错误：Multiple commands produce 'ali_ai_call-umbrella.h'
-
-如果遇到 umbrella header 重复的编译错误，请按照以下步骤解决：
-
-1. 确保 podspec 文件中正确配置了 source_files 和 public_header_files
-2. 删除 ios/Classes 目录下的重复 umbrella header 文件
-3. 清理并重新安装 pods：
-   ```bash
-   cd example/ios
-   pod deintegrate
-   pod cache clean --all
-   rm -rf Pods
-   rm -rf .symlinks
-   rm Podfile.lock
-   pod install
-   ```
-4. 重新构建项目：
-   ```bash
-   flutter clean
-   flutter pub get
-   cd example/ios
-   pod install
-   cd ..
-   flutter build ios
-   ```
-
+   
 ## 更新日志
 
 ### 1.0.0
