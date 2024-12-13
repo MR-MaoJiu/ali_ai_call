@@ -160,22 +160,15 @@ class _ChatScreenState extends State<ChatScreen> {
     });
 
     try {
-      // final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
+      final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
       _addMessage("已获取通话配置...", false);
-
-      // await AliAiCall.call(
-      //   rtcToken: callConfig.rtcAuthToken ?? '',
-      //   aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
-      //   aiAgentUserId: callConfig.aiAgentUserId ?? '',
-      //   channelId: callConfig.channelId ?? '',
-      // );
       await AliAiCall.call(
-        rtcToken:
-            "eyJhcHBpZCI6ImJjYzU5ODNlLWJiMjctNDgwYy04N2NjLWJlYWVjYjk3NzljOSIsImNoYW5uZWxpZCI6IkNIQU5ORUwwOWVhOWVjM2JjY2Y0YWZhYTY1MThmY2E5NmFiNzdmYyIsInVzZXJpZCI6IjEwODYzNzc1MDkyMzYyODU0NCIsIm5vbmNlIjoibnVsbCIsInRpbWVzdGFtcCI6MTczNDA3MzMyNSwiZ3NsYiI6WyJodHRwczovL2d3LnJ0bi5hbGl5dW5jcy5jb20iXSwidG9rZW4iOiJlYmY0MzQ4NWIyMDFlZGZjMWI5NGM0N2Q5ZDBmNzEwOTVhNjBiYzRmNjMxODliZTBlOGE3MTFmZjdmZDlmNmFhIn0=",
-        aiAgentInstanceId: '8ecd1f4d818542ce9bb34ca468d22b91',
-        aiAgentUserId: 'AGENT_USER09ea9ec3bccf4afaa6518fca96ab77fc',
-        channelId: 'CHANNEL09ea9ec3bccf4afaa6518fca96ab77fc',
+        rtcToken: callConfig.rtcAuthToken ?? '',
+        aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
+        aiAgentUserId: callConfig.aiAgentUserId ?? '',
+        channelId: callConfig.channelId ?? '',
       );
+
       setState(() {
         _isInCall = true;
       });

@@ -207,13 +207,22 @@ extension AliAiCallPlugin: ARTCAICallEngineDelegate {
     public func onAgentStateChanged(state: ARTCAICallAgentState) {
         channel?.invokeMethod("onRobotStateChanged", arguments: state.rawValue)
     }
-    
-    public func onUserSubtitleNotify(text: String, isSentenceEnd: Bool, sentenceId: Int ,voicePrintStatus: ARTCAICallVoiceprintResult) {
+
+//     public func onUserSubtitleNotify(text: String, isSentenceEnd: Bool, sentenceId: Int, voicePrintStatus: ARTCAICallVoiceprintResult) {
+//         let arguments: [String: Any] = [
+//             "text": text,
+//             "isSentenceEnd": isSentenceEnd,
+//             "sentenceId": sentenceId,
+//             "voicePrintStatus": voicePrintStatus.rawValue
+//         ]
+//         channel?.invokeMethod("onUserAsrSubtitleNotify", arguments: arguments)
+//     }
+
+    public func onUserSubtitleNotify(text: String, isSentenceEnd: Bool, sentenceId: Int) {
         let arguments: [String: Any] = [
             "text": text,
             "isSentenceEnd": isSentenceEnd,
-            "sentenceId": sentenceId,
-            "voicePrintStatus": voicePrintStatus.rawValue
+            "sentenceId": sentenceId
         ]
         channel?.invokeMethod("onUserAsrSubtitleNotify", arguments: arguments)
     }
