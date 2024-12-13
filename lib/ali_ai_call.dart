@@ -13,7 +13,6 @@ class AliAiCall {
   /// [onCallBegin] 通话开始回调
   /// [onCallEnd] 通话结束回调
   /// [onError] 错误回调,参数为错误信息
-  /// [onAIResponse] AI 响应回调,参数为响应内容
   /// [onUserSpeaking] 用户说话状态回调,true 表示正在说话
   /// [onNetworkQuality] 网络质量回调,参数为质量等级(0-6)
   /// [onVideoSizeChanged] 视频尺寸变化回调,包含宽高信息
@@ -27,7 +26,6 @@ class AliAiCall {
     void Function()? onCallBegin,
     void Function()? onCallEnd,
     void Function(String)? onError,
-    void Function(String)? onAIResponse,
     void Function(bool)? onUserSpeaking,
     void Function(int)? onNetworkQuality,
     void Function(Map<String, int>)? onVideoSizeChanged,
@@ -43,7 +41,6 @@ class AliAiCall {
         onCallBegin: onCallBegin,
         onCallEnd: onCallEnd,
         onError: onError,
-        onAIResponse: onAIResponse,
         onUserSpeaking: onUserSpeaking,
         onNetworkQuality: onNetworkQuality,
         onVideoSizeChanged: onVideoSizeChanged,

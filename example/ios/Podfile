@@ -37,8 +37,8 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   
-  pod 'ARTCAICallKit', '~> 1.2.0', :modular_headers => true
-  pod 'AliVCSDK_ARTC', '~> 6.11.3', :modular_headers => true
+  pod 'ARTCAICallKit', '~> 1.5.0', :modular_headers => true
+  pod 'AliVCSDK_ARTC', '~> 6.17.0', :modular_headers => true
 end
 
 post_install do |installer|

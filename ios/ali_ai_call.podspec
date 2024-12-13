@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'ali_ai_call'
-  s.version          = '1.0.0'
+  s.version          = '1.0.2'
   s.summary          = 'Ali AI Call Plugin'
   s.description      = <<-DESC
 A Flutter plugin for Ali AI Call Kit.
@@ -21,8 +21,8 @@ A Flutter plugin for Ali AI Call Kit.
 
   # 修改 Flutter 依赖配置
   s.dependency 'Flutter'
-  s.dependency 'ARTCAICallKit', '~> 1.2.0'
-  s.dependency 'AliVCSDK_ARTC', '~> 6.11.3'
+  s.dependency 'ARTCAICallKit', '~> 1.5.0'
+  s.dependency 'AliVCSDK_ARTC', '~> 6.17.0'
 
   # 确保包含 Flutter.framework
   s.ios.framework = ['Flutter']

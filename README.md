@@ -175,10 +175,10 @@ await AliAiCall.setAIRole("role_id", "role_name");
 | userAsrSentenceId | int | 对应的用户语音ID |
 
 ### onVolumeChanged
-| 参数 | 类型 | 说明 |
-|-----|------|-----|
-| uid | String | 用户ID |
-| volume | int | 音量大小 |
+| 参数 | 类型 | 说明           |
+|-----|------|--------------|
+| uid | String | 用户ID         |
+| volume | int | 音量大小 (0-255) |
 
 ## 错误处理
 

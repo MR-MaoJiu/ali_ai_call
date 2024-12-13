@@ -45,6 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
       onCallBegin: () {
         setState(() {
           _isInCall = true;
+          print("---------------onCallBegin-----------------");
         });
         _addMessage("通话已开始", false);
       },
@@ -52,34 +53,39 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           _isInCall = false;
         });
+        print("---------------onCallEnd-----------------");
         _addMessage("通话已结束", false);
       },
       onError: (error) {
+        print("---------------发生错误-----------------");
         _addMessage("发生错误: $error", false);
       },
-      onAIResponse: (response) {
-        _addMessage(response, false);
-      },
       onUserSpeaking: (isSpeaking) {
+        print("---------------onUserSpeaking-----------------");
         setState(() {
           _isUserSpeaking = isSpeaking;
         });
       },
       onNetworkQuality: (quality) {
+        print("---------------onNetworkQuality-----------------");
         setState(() {
           _networkQuality = quality;
         });
       },
       onVoiceIdChanged: (voiceId) {
+        print("---------------onVoiceIdChanged-----------------");
         _addMessage("AI声音已切换: $voiceId", false);
       },
       onRoleChanged: (role) {
+        print("---------------onRoleChanged-----------------");
         _addMessage("AI角色已切换: $role", false);
       },
       onAIAgentStateChanged: (state) {
+        print("---------------onAIAgentStateChanged-----------------");
         _addMessage("AI状态变更: $state", false);
       },
       onVolumeChanged: (Map<String, dynamic> volumeData) {
+        print("---------------onVolumeChanged-----------------");
         setState(() {
           _currentUid = volumeData['uid'] as String;
           final int volume = volumeData['volume'] as int;
@@ -88,15 +94,38 @@ class _ChatScreenState extends State<ChatScreen> {
         });
       },
       onAIAgentSubtitleNotify: (Map<String, dynamic> asrData) {
+        print(
+            "---------------onAIAgentSubtitleNotify${asrData}-----------------");
         setState(() {
           _currentASRText = asrData['text'] as String;
+          _addMessage(_currentASRText, false);
         });
       },
       onUserAsrSubtitleNotify: (Map<String, dynamic> data) {
+        print("---------------onUserAsrSubtitleNotify${data}-----------------");
         setState(() {
           _currentUserAsrText = data['text'] as String;
           _isUserSpeakingEnd = data['isSentenceEnd'] as bool;
           _currentSentenceId = data['sentenceId'] as int;
+          VoicePrintStatusCode voicePrintStatus = data['voicePrintStatus'];
+
+          switch (voicePrintStatus) {
+            case VoicePrintStatusCode.speakerRecognized:
+              print('说话人已识别');
+              break;
+            case VoicePrintStatusCode.speakerNotRecognized:
+              print('说话人未识别');
+              break;
+            case VoicePrintStatusCode.disable:
+              print('声纹识别已禁用');
+              break;
+            case VoicePrintStatusCode.enableWithoutRegister:
+              print('声纹识别已启用但未注册');
+              break;
+            case VoicePrintStatusCode.unknown:
+              print('未知状态');
+              break;
+          }
         });
       },
     );
@@ -131,16 +160,25 @@ class _ChatScreenState extends State<ChatScreen> {
     });
 
     try {
-      final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
+      // final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
       _addMessage("已获取通话配置...", false);
 
+      // await AliAiCall.call(
+      //   rtcToken: callConfig.rtcAuthToken ?? '',
+      //   aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
+      //   aiAgentUserId: callConfig.aiAgentUserId ?? '',
+      //   channelId: callConfig.channelId ?? '',
+      // );
       await AliAiCall.call(
-        rtcToken: callConfig.rtcAuthToken ?? '',
-        aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
-        aiAgentUserId: callConfig.aiAgentUserId ?? '',
-        channelId: callConfig.channelId ?? '',
+        rtcToken:
+            "eyJhcHBpZCI6ImJjYzU5ODNlLWJiMjctNDgwYy04N2NjLWJlYWVjYjk3NzljOSIsImNoYW5uZWxpZCI6IkNIQU5ORUwwOWVhOWVjM2JjY2Y0YWZhYTY1MThmY2E5NmFiNzdmYyIsInVzZXJpZCI6IjEwODYzNzc1MDkyMzYyODU0NCIsIm5vbmNlIjoibnVsbCIsInRpbWVzdGFtcCI6MTczNDA3MzMyNSwiZ3NsYiI6WyJodHRwczovL2d3LnJ0bi5hbGl5dW5jcy5jb20iXSwidG9rZW4iOiJlYmY0MzQ4NWIyMDFlZGZjMWI5NGM0N2Q5ZDBmNzEwOTVhNjBiYzRmNjMxODliZTBlOGE3MTFmZjdmZDlmNmFhIn0=",
+        aiAgentInstanceId: '8ecd1f4d818542ce9bb34ca468d22b91',
+        aiAgentUserId: 'AGENT_USER09ea9ec3bccf4afaa6518fca96ab77fc',
+        channelId: 'CHANNEL09ea9ec3bccf4afaa6518fca96ab77fc',
       );
-
+      setState(() {
+        _isInCall = true;
+      });
       _addMessage("正在连接AI助手...", false);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
