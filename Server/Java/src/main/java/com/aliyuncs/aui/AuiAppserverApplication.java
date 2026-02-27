@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui;
+package com.aliyuncs.aui;
 
 import com.alibaba.fastjson.util.TypeUtils;
 import org.springframework.boot.SpringApplication;

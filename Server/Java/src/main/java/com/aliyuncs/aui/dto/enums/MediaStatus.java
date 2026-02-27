@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.dto.enums;
+package com.aliyuncs.aui.dto.enums;
 
 /**
  * 媒资状态

@@ -287,7 +287,8 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
       public void onAICallEngineRobotStateChanged(ARTCAICallEngine.ARTCAICallRobotState oldState,
                                                   ARTCAICallEngine.ARTCAICallRobotState newState) {
         Log.e(TAG, "onRobotStateChanged: " + oldState.toString() + " -> " + newState.toString());
-        channel.invokeMethod("onRobotStateChanged", newState.toString());
+        // 与 Dart 侧事件名保持一致
+        channel.invokeMethod("onAIAgentStateChanged", newState.toString());
       }
 
       @Override

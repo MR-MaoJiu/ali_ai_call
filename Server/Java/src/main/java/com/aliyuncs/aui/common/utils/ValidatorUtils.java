@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.common.utils;
+package com.aliyuncs.aui.common.utils;
 
 
 import com.aliyuncs.aui.common.exception.BizException;

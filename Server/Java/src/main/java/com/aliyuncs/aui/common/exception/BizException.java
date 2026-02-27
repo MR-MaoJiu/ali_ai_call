@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.common.exception;
+package com.aliyuncs.aui.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

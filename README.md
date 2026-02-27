@@ -26,7 +26,7 @@
 
 ```yaml
 dependencies:
-  ali_ai_call: ^1.0.0
+  ali_ai_call: ^1.0.1
 ```
 
 2. iOS 配置:
@@ -255,6 +255,13 @@ onError: (error) {
 
    
 ## 更新日志
+
+### 1.0.1
+- 升级 Android 侧 AliVCSDK_ARTC 至 `7.10.0`、ARTCAICallKit 至 `2.11.0`
+- 升级 iOS 侧 AliVCSDK_ARTC 至 `7.10.0`、ARTCAICallKit 至 `2.11.0`
+- Dart 层新增多种回调：智能体音视频可用状态、数字人首帧渲染、语音打断状态、用户上线等
+- 修复 `onAIAgentStateChanged` 回调事件名与原生实现不一致的问题
+- 修复 Server/Java 中部分类包名错误，保持与官方 AUIAICall Server/Java 最新版本对齐
 
 ### 1.0.0
 - 初始版本发布

@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.common.exception;
+package com.aliyuncs.aui.common.exception;
 
 import com.aliyuncs.aui.common.utils.Result;
 import lombok.extern.slf4j.Slf4j;

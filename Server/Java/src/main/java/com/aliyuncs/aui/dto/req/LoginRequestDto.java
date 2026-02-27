@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.dto.req;
+package com.aliyuncs.aui.dto.req;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

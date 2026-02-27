@@ -50,6 +50,21 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
   /// 音量变化回调，包含音量大小信息
   void Function(Map<String, dynamic>)? _onVolumeChanged;
 
+  /// 智能体视频推流可用状态回调
+  void Function(bool)? _onAgentVideoAvailable;
+
+  /// 智能体音频推流可用状态回调
+  void Function(bool)? _onAgentAudioAvailable;
+
+  /// 数字人首帧渲染完成回调
+  void Function()? _onAgentAvatarFirstFrameDrawn;
+
+  /// 语音打断功能开关变化回调
+  void Function(bool)? _onVoiceInterrupted;
+
+  /// 其他用户上线回调
+  void Function(String)? _onUserOnline;
+
   @override
   Future<void> initEngine({required String userId}) async {
     await methodChannel.invokeMethod('initEngine', {'userId': userId});
@@ -126,6 +141,11 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
     void Function(Map<String, dynamic>)? onUserAsrSubtitleNotify,
     void Function(Map<String, dynamic>)? onAIAgentSubtitleNotify,
     void Function(Map<String, dynamic>)? onVolumeChanged,
+    void Function(bool)? onAgentVideoAvailable,
+    void Function(bool)? onAgentAudioAvailable,
+    void Function()? onAgentAvatarFirstFrameDrawn,
+    void Function(bool)? onVoiceInterrupted,
+    void Function(String)? onUserOnline,
   }) {
     _onCallBegin = onCallBegin;
     _onCallEnd = onCallEnd;
@@ -140,6 +160,11 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
     _onUserAsrSubtitleNotify = onUserAsrSubtitleNotify;
     _onAIAgentSubtitleNotify = onAIAgentSubtitleNotify;
     _onVolumeChanged = onVolumeChanged;
+    _onAgentVideoAvailable = onAgentVideoAvailable;
+    _onAgentAudioAvailable = onAgentAudioAvailable;
+    _onAgentAvatarFirstFrameDrawn = onAgentAvatarFirstFrameDrawn;
+    _onVoiceInterrupted = onVoiceInterrupted;
+    _onUserOnline = onUserOnline;
   }
 
   /// 设置方法通道回调处理器
@@ -198,6 +223,21 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
         case 'onVolumeChanged':
           _onVolumeChanged
               ?.call(Map<String, dynamic>.from(call.arguments as Map));
+          break;
+        case 'onAgentVideoAvailable':
+          _onAgentVideoAvailable?.call(call.arguments as bool);
+          break;
+        case 'onAgentAudioAvailable':
+          _onAgentAudioAvailable?.call(call.arguments as bool);
+          break;
+        case 'onAgentAvatarFirstFrameDrawn':
+          _onAgentAvatarFirstFrameDrawn?.call();
+          break;
+        case 'onVoiceInterrupted':
+          _onVoiceInterrupted?.call(call.arguments as bool);
+          break;
+        case 'onUserOnLine':
+          _onUserOnline?.call(call.arguments as String);
           break;
       }
     });

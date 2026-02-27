@@ -12,7 +12,8 @@ dependencies:
   ali_ai_call:
     path: ../
   dio: ^5.4.0
-  shared_preferences: ^2.2.2
+  # 升级以适配 Flutter 移除 v1 Android embedding（避免使用 PluginRegistry.Registrar）
+  shared_preferences: ^2.3.0
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

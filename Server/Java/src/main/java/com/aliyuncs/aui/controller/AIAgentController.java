@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.controller;
+package com.aliyuncs.aui.controller;
 
 import com.aliyuncs.aui.common.utils.Result;
 import com.aliyuncs.aui.common.utils.ValidatorUtils;

@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.service;
+package com.aliyuncs.aui.service;
 
 import com.aliyuncs.aui.dto.req.AIAgentStartRequestDto;
 import com.aliyuncs.aui.dto.req.AiAgentStopRequestDto;

@@ -17,10 +17,19 @@ pluginManagement {
     }
 }
 
+buildscript {
+    dependencyLocking {
+        // 与当前 Flutter stable 示例保持一致锁定依赖
+        lockFile = file("${rootProject.projectDir}/buildscript-gradle.lockfile")
+        lockAllConfigurations()
+    }
+}
+
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-    id "com.android.application" version "7.3.0" apply false
-    id "org.jetbrains.kotlin.android" version "1.7.10" apply false
+    // 与 Flutter stable 示例保持一致的 AGP / Kotlin 版本
+    id "com.android.application" version "8.7.0" apply false
+    id "org.jetbrains.kotlin.android" version "2.1.0" apply false
 }
 
 include ":app"

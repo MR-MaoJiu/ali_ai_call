@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'config_service.dart';
 
 class AIService {
-  static const String baseUrl = 'http://172.25.2.232:9683';
+  static const String baseUrl = 'http://192.168.120.62:8081';
   final Dio _dio = Dio(BaseOptions(
     baseUrl: baseUrl,
     connectTimeout: const Duration(seconds: 5),

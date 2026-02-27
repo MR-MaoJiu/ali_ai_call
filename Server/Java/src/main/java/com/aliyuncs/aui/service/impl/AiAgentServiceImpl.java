@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.service.impl;
+package com.aliyuncs.aui.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.tea.TeaException;

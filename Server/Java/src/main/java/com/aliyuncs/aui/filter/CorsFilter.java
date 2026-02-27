@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.filter;
+package com.aliyuncs.aui.filter;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;

@@ -1,0 +1,56 @@
+PODS:
+  - ali_ai_call (1.0.2):
+    - AliVCSDK_ARTC (~> 7.10.0)
+    - ARTCAICallKit (~> 2.11.0)
+    - Flutter
+  - AliVCSDK_ARTC (7.10.2):
+    - AliVCSDK_ARTC/Default (= 7.10.2)
+  - AliVCSDK_ARTC/Default (7.10.2)
+  - AliVCSDK_Plugin_AEC (2.0.0):
+    - AliVCSDK_Plugin_AEC/Default (= 2.0.0)
+  - AliVCSDK_Plugin_AEC/Default (2.0.0)
+  - ARTCAICallKit (2.11.0):
+    - ARTCAICallKit/Callbot (= 2.11.0)
+  - ARTCAICallKit/AEC (2.11.0):
+    - AliVCSDK_Plugin_AEC (~> 2.0.0)
+  - ARTCAICallKit/Call (2.11.0)
+  - ARTCAICallKit/Callbot (2.11.0):
+    - ARTCAICallKit/AEC
+    - ARTCAICallKit/Call
+  - Flutter (1.0.0)
+  - shared_preferences_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - ali_ai_call (from `.symlinks/plugins/ali_ai_call/ios`)
+  - AliVCSDK_ARTC (~> 7.10.0)
+  - ARTCAICallKit (~> 2.11.0)
+  - Flutter (from `Flutter`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+
+SPEC REPOS:
+  trunk:
+    - AliVCSDK_ARTC
+    - AliVCSDK_Plugin_AEC
+    - ARTCAICallKit
+
+EXTERNAL SOURCES:
+  ali_ai_call:
+    :path: ".symlinks/plugins/ali_ai_call/ios"
+  Flutter:
+    :path: Flutter
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+
+SPEC CHECKSUMS:
+  ali_ai_call: ff9269ea8b25de3e2a50aedf96a285e15d41fc05
+  AliVCSDK_ARTC: c3030e71c89d7eaffec5e373fc44a2864f827ac7
+  AliVCSDK_Plugin_AEC: 824b01eec5b14e3c3fc8375e9e032683a34a873a
+  ARTCAICallKit: 381eb6b95320db1a311e09d7cc84fde039cd96c4
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
+
+PODFILE CHECKSUM: 174eb6961f335e5118801adea52dd510ef540837
+
+COCOAPODS: 1.16.2

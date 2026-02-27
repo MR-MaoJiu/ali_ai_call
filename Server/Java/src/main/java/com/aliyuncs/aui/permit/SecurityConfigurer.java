@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.permit;
+package com.aliyuncs.aui.permit;
 
 import com.aliyuncs.aui.filter.TokenAuthenticationFilter;
 import org.springframework.context.annotation.Configuration;

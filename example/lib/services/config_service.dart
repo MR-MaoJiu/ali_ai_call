@@ -6,7 +6,7 @@ class ConfigService {
     return {
       'userId': prefs.getString('userId') ?? '9527',
       'aiAgentId':
-          prefs.getString('aiAgentId') ?? 'f22071db56834e82a14755be5b20a9c1',
+          prefs.getString('aiAgentId') ?? 'fe3b67ab350a4e05a81653b9bce709c5',
       'workflowType': prefs.getString('workflowType') ?? 'System_VoiceChat',
       'region': prefs.getString('region') ?? 'cn-shanghai',
     };

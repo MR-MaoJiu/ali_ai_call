@@ -30,6 +30,12 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isUserSpeakingEnd = false;
   int _currentSentenceId = 0;
   String _currentUid = '';
+  bool _agentVideoAvailable = false;
+  bool _agentAudioAvailable = false;
+  bool _avatarFirstFrameDrawn = false;
+  bool _voiceInterruptEnabled = false;
+  String _lastOnlineUserId = '';
+  String _aiAgentState = '';
 
   @override
   void initState() {
@@ -82,6 +88,9 @@ class _ChatScreenState extends State<ChatScreen> {
       },
       onAIAgentStateChanged: (state) {
         print("---------------onAIAgentStateChanged-----------------");
+        setState(() {
+          _aiAgentState = state;
+        });
         _addMessage("AI状态变更: $state", false);
       },
       onVolumeChanged: (Map<String, dynamic> volumeData) {
@@ -89,6 +98,7 @@ class _ChatScreenState extends State<ChatScreen> {
         setState(() {
           _currentUid = volumeData['uid'] as String;
           final int volume = volumeData['volume'] as int;
+          _currentVolume = volume;
           _isUserSpeaking = volume > 0;
           print('Volume Changed: $volume, Speaking: $_isUserSpeaking');
         });
@@ -127,6 +137,38 @@ class _ChatScreenState extends State<ChatScreen> {
               break;
           }
         });
+      },
+      onAgentVideoAvailable: (available) {
+        print("---------------onAgentVideoAvailable-----------------");
+        setState(() {
+          _agentVideoAvailable = available;
+        });
+      },
+      onAgentAudioAvailable: (available) {
+        print("---------------onAgentAudioAvailable-----------------");
+        setState(() {
+          _agentAudioAvailable = available;
+        });
+      },
+      onAgentAvatarFirstFrameDrawn: () {
+        print("---------------onAgentAvatarFirstFrameDrawn-----------------");
+        setState(() {
+          _avatarFirstFrameDrawn = true;
+        });
+        _addMessage("数字人首帧已渲染", false);
+      },
+      onVoiceInterrupted: (enable) {
+        print("---------------onVoiceInterrupted-----------------");
+        setState(() {
+          _voiceInterruptEnabled = enable;
+        });
+      },
+      onUserOnline: (uid) {
+        print("---------------onUserOnLine-----------------");
+        setState(() {
+          _lastOnlineUserId = uid;
+        });
+        _addMessage("有用户上线: $uid", false);
       },
     );
   }
@@ -234,6 +276,19 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void _toggleVoiceInterrupt() async {
+    try {
+      await AliAiCall.enableVoiceInterrupt(!_voiceInterruptEnabled);
+      setState(() {
+        _voiceInterruptEnabled = !_voiceInterruptEnabled;
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('切换语音打断开关失败: $e')),
+      );
+    }
+  }
+
   Widget _buildVoiceStatus() {
     if (!_isInCall) return const SizedBox.shrink();
 
@@ -256,6 +311,43 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '网络质量: $_networkQuality',
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                    Text(
+                      '视频: ${_agentVideoAvailable ? "可用" : "不可用"}  音频: ${_agentAudioAvailable ? "可用" : "不可用"}',
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ],
+                ),
+                if (_aiAgentState.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    'AI状态: $_aiAgentState',
+                    style:
+                        const TextStyle(fontSize: 12, color: Colors.black54),
+                  ),
+                ],
+                if (_lastOnlineUserId.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    '最近上线用户: $_lastOnlineUserId',
+                    style:
+                        const TextStyle(fontSize: 12, color: Colors.black54),
+                  ),
+                ],
+                if (_avatarFirstFrameDrawn) ...[
+                  const SizedBox(height: 4),
+                  const Text(
+                    '数字人已就绪',
+                    style: TextStyle(fontSize: 12, color: Colors.green),
+                  ),
+                ],
+                const SizedBox(height: 12),
                 AudioVisualizer(
                   isActive: _isUserSpeaking,
                   volume: _currentVolume,
@@ -375,6 +467,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     icon: const Icon(Icons.voice_over_off),
                     label: const Text('打断AI'),
                     onPressed: () => AliAiCall.interruptSpeaking(),
+                  ),
+                if (_isInCall)
+                  ElevatedButton.icon(
+                    icon: Icon(
+                      _voiceInterruptEnabled
+                          ? Icons.hearing
+                          : Icons.hearing_disabled,
+                    ),
+                    label: Text(_voiceInterruptEnabled ? '关闭语音打断' : '开启语音打断'),
+                    onPressed: _toggleVoiceInterrupt,
                   ),
               ],
             ),

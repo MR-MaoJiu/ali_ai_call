@@ -205,7 +205,8 @@ extension AliAiCallPlugin: ARTCAICallEngineDelegate {
     }
     
     public func onAgentStateChanged(state: ARTCAICallAgentState) {
-        channel?.invokeMethod("onRobotStateChanged", arguments: state.rawValue)
+        // 与 Dart 侧事件名保持一致
+        channel?.invokeMethod("onAIAgentStateChanged", arguments: state.rawValue)
     }
 
 //     public func onUserSubtitleNotify(text: String, isSentenceEnd: Bool, sentenceId: Int, voicePrintStatus: ARTCAICallVoiceprintResult) {

@@ -22,6 +22,11 @@ class AliAiCall {
   /// [onUserAsrSubtitleNotify] 用户语音识别字幕通知回调
   /// [onAIAgentSubtitleNotify] AI 代理字幕通知回调
   /// [onVolumeChanged] 音量变化回调
+  /// [onAgentVideoAvailable] 智能体视频推流可用状态回调
+  /// [onAgentAudioAvailable] 智能体音频推流可用状态回调
+  /// [onAgentAvatarFirstFrameDrawn] 数字人首帧渲染完成回调
+  /// [onVoiceInterrupted] 语音打断功能开关变化回调
+  /// [onUserOnline] 其他用户上线回调
   static void setEngineEventHandler({
     void Function()? onCallBegin,
     void Function()? onCallEnd,
@@ -35,6 +40,11 @@ class AliAiCall {
     void Function(Map<String, dynamic>)? onUserAsrSubtitleNotify,
     void Function(Map<String, dynamic>)? onAIAgentSubtitleNotify,
     void Function(Map<String, dynamic>)? onVolumeChanged,
+    void Function(bool)? onAgentVideoAvailable,
+    void Function(bool)? onAgentAudioAvailable,
+    void Function()? onAgentAvatarFirstFrameDrawn,
+    void Function(bool)? onVoiceInterrupted,
+    void Function(String)? onUserOnline,
   }) {
     if (_platform is MethodChannelAliAiCall) {
       (_platform as MethodChannelAliAiCall).setEngineCallback(
@@ -50,6 +60,11 @@ class AliAiCall {
         onUserAsrSubtitleNotify: onUserAsrSubtitleNotify,
         onAIAgentSubtitleNotify: onAIAgentSubtitleNotify,
         onVolumeChanged: onVolumeChanged,
+        onAgentVideoAvailable: onAgentVideoAvailable,
+        onAgentAudioAvailable: onAgentAudioAvailable,
+        onAgentAvatarFirstFrameDrawn: onAgentAvatarFirstFrameDrawn,
+        onVoiceInterrupted: onVoiceInterrupted,
+        onUserOnline: onUserOnline,
       );
     }
   }

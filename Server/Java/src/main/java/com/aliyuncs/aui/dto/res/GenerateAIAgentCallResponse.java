@@ -1,4 +1,4 @@
-package Server.Java.src.main.java.com.aliyuncs.aui.dto.res;
+package com.aliyuncs.aui.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
