@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'ali_ai_call'
-  s.version          = '1.0.2'
+  s.version          = '1.0.5'
   s.summary          = 'Ali AI Call Plugin'
   s.description      = <<-DESC
 A Flutter plugin for Ali AI Call Kit.

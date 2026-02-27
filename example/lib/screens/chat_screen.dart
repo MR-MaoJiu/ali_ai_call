@@ -204,11 +204,17 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final AiConfigModel callConfig = await _aiService.generateAIAgentCall();
       _addMessage("已获取通话配置...", false);
+      // 读取本地配置中的 userId，用于 iOS call[1/2] 接口的 userId 参数
+      final config = await ConfigService.getConfig();
       await AliAiCall.call(
         rtcToken: callConfig.rtcAuthToken ?? '',
         aiAgentInstanceId: callConfig.aiAgentInstanceId ?? '',
         aiAgentUserId: callConfig.aiAgentUserId ?? '',
         channelId: callConfig.channelId ?? '',
+        // iOS 侧 ARTCAICallAgentInfo.agentId 需要智能体模板ID
+        aiAgentId: callConfig.aiAgentId ?? '',
+        // iOS 侧 call(userId:) 需要当前登录用户ID
+        userId: config['userId'] ?? '',
       );
 
       setState(() {

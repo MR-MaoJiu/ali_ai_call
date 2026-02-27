@@ -50,7 +50,12 @@ public class AliAiCallPlugin implements FlutterPlugin, MethodCallHandler {
         String aiAgentInstanceId = call.argument("aiAgentInstanceId");
         String aiAgentUserId = call.argument("aiAgentUserId");
         String channelId = call.argument("channelId");
-        Log.e(TAG, "call "+"rtcToken:"+rtcToken+"aiAgentInstanceId:"+aiAgentInstanceId+"aiAgentUserId:"+aiAgentUserId+"channelId:"+channelId+"result:"+result);
+        // aiAgentId（模板ID）与 userId（当前用户ID）由 iOS 侧使用，Android 暂存备用
+        String aiAgentId = call.argument("aiAgentId");
+        String callUserId = call.argument("userId");
+        Log.e(TAG, "call rtcToken:" + rtcToken + " aiAgentInstanceId:" + aiAgentInstanceId
+            + " aiAgentUserId:" + aiAgentUserId + " channelId:" + channelId
+            + " aiAgentId:" + aiAgentId + " userId:" + callUserId);
         startCall(rtcToken, aiAgentInstanceId, aiAgentUserId, channelId, result);
         break;
       case "hangup":

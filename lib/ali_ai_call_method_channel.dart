@@ -77,12 +77,17 @@ class MethodChannelAliAiCall extends AliAiCallPlatform {
     required String aiAgentInstanceId,
     required String aiAgentUserId,
     required String channelId,
+    String? aiAgentId,
+    String? userId,
   }) async {
     await methodChannel.invokeMethod('call', {
       'rtcToken': rtcToken,
       'aiAgentInstanceId': aiAgentInstanceId,
       'aiAgentUserId': aiAgentUserId,
       'channelId': channelId,
+      // iOS call[1/2] 接口需要：智能体模板ID 和 当前用户ID
+      if (aiAgentId != null) 'aiAgentId': aiAgentId,
+      if (userId != null) 'userId': userId,
     });
   }
 

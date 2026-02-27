@@ -77,20 +77,26 @@ class AliAiCall {
 
   /// 发起通话
   /// [rtcToken] RTC通话令牌
-  /// [aiAgentInstanceId] AI代理实例ID
-  /// [aiAgentUserId] AI代理用户ID
+  /// [aiAgentInstanceId] AI代理运行实例ID（服务端启动后返回）
+  /// [aiAgentUserId] AI代理在RTC频道中的用户ID
   /// [channelId] 通话频道ID
+  /// [aiAgentId] 智能体模板ID，iOS 侧 ARTCAICallAgentInfo.agentId 必传
+  /// [userId] 当前登录用户ID，iOS 侧 call(userId:) 必传
   static Future<void> call({
     required String rtcToken,
     required String aiAgentInstanceId,
     required String aiAgentUserId,
     required String channelId,
+    String? aiAgentId,
+    String? userId,
   }) {
     return _platform.call(
       rtcToken: rtcToken,
       aiAgentInstanceId: aiAgentInstanceId,
       aiAgentUserId: aiAgentUserId,
       channelId: channelId,
+      aiAgentId: aiAgentId,
+      userId: userId,
     );
   }
 

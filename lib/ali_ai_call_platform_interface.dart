@@ -31,14 +31,18 @@ abstract class AliAiCallPlatform extends PlatformInterface {
 
   /// 发起通话
   /// [rtcToken] RTC通话令牌
-  /// [aiAgentInstanceId] AI代理实例ID
-  /// [aiAgentUserId] AI代理用户ID
+  /// [aiAgentInstanceId] AI代理运行实例ID（服务端启动智能体后返回）
+  /// [aiAgentUserId] AI代理在RTC频道中的用户ID
   /// [channelId] 通话频道ID
+  /// [aiAgentId] 智能体模板ID（控制台创建的 Agent ID，iOS 侧必传）
+  /// [userId] 当前登录用户ID（iOS call[1/2] 接口必传）
   Future<void> call({
     required String rtcToken,
     required String aiAgentInstanceId,
     required String aiAgentUserId,
     required String channelId,
+    String? aiAgentId,
+    String? userId,
   }) {
     throw UnimplementedError('call() has not been implemented.');
   }
