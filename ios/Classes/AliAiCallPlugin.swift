@@ -120,7 +120,8 @@ import ARTCAICallKit
         
         isJoining = true
         
-        let agentInfo = ARTCAICallAgentInfo(agentType: ARTCAICallAgentType.VoiceAgent,
+        let agentInfo = ARTCAICallAgentInfo(agentId: aiAgentInstanceId,
+                                          agentType: ARTCAICallAgentType.VoiceAgent,
                                           channelId: channelId,
                                           uid: aiAgentUserId,
                                           instanceId: aiAgentInstanceId)
