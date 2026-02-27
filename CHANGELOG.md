@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.4
 
 - 升级 Android 侧 AliVCSDK_ARTC 至 `7.10.0`、ARTCAICallKit 至 `2.11.0`
 - 升级 iOS 侧 AliVCSDK_ARTC 至 `7.10.0`、ARTCAICallKit 至 `2.11.0`
