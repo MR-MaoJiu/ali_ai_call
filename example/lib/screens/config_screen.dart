@@ -27,7 +27,7 @@ class _ConfigScreenState extends State<ConfigScreen> {
     setState(() {
       _userIdController.text = prefs.getString('userId') ?? '9527';
       _aiAgentIdController.text =
-          prefs.getString('aiAgentId') ?? 'f22071db56834e82a14755be5b20a9c1';
+          prefs.getString('aiAgentId') ?? 'fe3b67ab350a4e05a81653b9bce709c5';
       _workflowTypeController.text =
           prefs.getString('workflowType') ?? 'System_VoiceChat';
       _regionController.text = prefs.getString('region') ?? 'cn-shanghai';
